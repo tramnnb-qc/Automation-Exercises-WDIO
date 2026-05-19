@@ -1,0 +1,47 @@
+Chapter 0: GitHub
+1. GitHub là gì? (Sơ lược)
+GitHub là một nền tảng lưu trữ mã nguồn dựa trên Git. GitHub không chỉ là nơi lưu code mà còn là nơi:
+Review Code: Check xem kịch bản test của đồng nghiệp có đúng logic không.
+CI/CD Integration: Tự động chạy test khi có code mới được đẩy lên (GitHub Actions).
+Version Control: Quản lý các phiên bản của bộ test script.
+…
+
+2. Luồng làm việc thực tế (Git Flow)
+Trong các dự án chuyên nghiệp, bạn không bao giờ đẩy code trực tiếp vào nhánh main. Quy trình chuẩn sẽ như sau:
+Clone/Pull: Cập nhật code mới nhất từ server về máy cá nhân.
+Branching: Tạo một nhánh mới (ví dụ: feature/login-test) để viết kịch bản.
+Commit & Push: Lưu các thay đổi và đẩy nhánh đó lên GitHub.
+Pull Request (PR): Tạo một lời đề nghị gộp code vào nhánh chính.
+Code Review: Đồng nghiệp vào xem, comment góp ý, yêu cầu sửa (nếu cần).
+Merge: Sau khi được Approve, code mới chính thức được gộp vào nhánh chính.
+
+3. Các "Case khó" và Cách giải quyết (Troubleshooting)
+
+Case 1: Merge Conflict (Xung đột code)
+Tình huống: Bạn và đồng nghiệp cùng sửa trên một dòng code trong file login.page.js. Khi bạn gộp code, GitHub báo lỗi không thể merge.
+Giải quyết: * Phải thực hiện git pull để lấy code conflict về máy.
+Mở file bị conflict, Git sẽ đánh dấu vùng tranh chấp bằng các ký hiệu <<<<<<< và >>>>>>>.
+Bạn phải trao đổi với đồng nghiệp để quyết định giữ code của ai hoặc kết hợp cả hai, sau đó commit lại.
+Case 2: "Lỡ tay" Commit nhầm thông tin nhạy cảm
+Tình huống: Bạn lỡ tay commit cả file .env chứa username/password của server lên GitHub.
+Giải quyết: 
+Dùng git reset --soft HEAD~1 để quay lại bước trước khi commit.
+Ngay lập tức đưa file đó vào .gitignore.
+Case 3: Code máy mình chạy, máy đồng nghiệp không chạy
+Tình huống: Bạn push code lên, đồng nghiệp pull về nhưng báo lỗi thiếu thư viện hoặc lỗi cấu hình.
+Giải quyết: * Kiểm tra file package.json xem đã lưu thư viện mới bằng npm install --save chưa.
+Đảm bảo đồng nghiệp đã chạy npm install để cập nhật môi trường.
+Kiểm tra sự khác biệt giữa các file cấu hình cục bộ (thường bị bỏ qua bởi .gitignore).
+
+4. GitHub Actions cho Automation (Sơ lược CI/CD)
+GitHub Actions là công cụ giúp tự động hóa việc chạy test.
+Ví dụ: Cứ mỗi tối lúc 12h, GitHub sẽ tự khởi tạo một máy ảo, cài đặt môi trường, chạy bộ test WDIO và gửi báo cáo về Email/Slack.
+Điều này giúp phát hiện lỗi sớm mà không cần tester phải ngồi trực máy.
+
+5. Bài tập thực hành cho học viên
+Đề bài: Chia lớp thành các nhóm 2 người.
+Học viên A: Tạo một Repository trên GitHub, tạo file test.js và push lên nhánh main.
+Học viên B: Clone về, tạo nhánh feature/update, sửa file test.js và tạo Pull Request.
+Học viên A: Vào PR của B, để lại một comment góp ý (ví dụ: "Sửa lại selector này").
+Học viên B: Sửa code theo ý kiến của A, push lại.
+Học viên A: Approve và Merge.
