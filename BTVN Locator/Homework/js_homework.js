@@ -1,0 +1,110 @@
+/**
+ * Bài 1: Truy vết mỏ neo (XPath Axes - Parent/Child)
+ * Ngữ cảnh: Một trang quản trị có danh sách User. Mỗi dòng có một nút "Edit".
+ * HTML
+<tr class="user-row">
+    <td>1</td>
+    <td>Quang Tester</td>
+    <td>Active</td>
+    <td><button class="btn">Edit</button></td>
+</tr>
+ * Yêu cầu: Viết XPath để tìm nút Edit của User có tên là "Quang Tester". 
+(Gợi ý: Không được dùng ID hay Class của nút Button vì chúng giống hệt nhau ở mọi dòng).
+ */
+
+//td[text()='Quang Tester']/parent::tr//button
+
+/**
+ * Bài 2: Xử lý Dynamic ID (CSS Suffix/Prefix)
+ * Ngữ cảnh: Một hệ thống dùng ID tự động nhảy số mỗi khi load trang.
+ * HTML
+<input id="username_78234" class="input">
+<input id="username_99122" class="input">
+ * Yêu cầu: Viết 1 CSS Selector duy nhất có thể tìm được ô input username này
+ dù số phía sau có thay đổi thành bất kỳ số nào.
+ */
+
+// input[(id ^= "username_")];
+
+/**
+ * Bài 3: Vây bắt phần tử anh em (Following Sibling)
+ * Ngữ cảnh: Một Form đăng ký mà các nhãn (label) và ô nhập (input) nằm ngang hàng.
+ * HTML
+<label>Email Address:</label>
+<input type="text">
+ * Yêu cầu: Viết XPath tìm thẻ input nằm ngay sau thẻ label 
+có chứa nội dung "Email Address".
+ */
+
+//label[contains(text(),'Email Address')]/following-sibling::input
+
+/**
+ * Bài 4: Kỹ thuật loại trừ (CSS :not)
+ * Ngữ cảnh: Bạn có 5 cái nút, nhưng 1 cái bị ẩn (disabled).
+ * HTML
+<button class="btn">Save</button>
+<button class="btn disabled">Save</button>
+<button class="btn">Save</button>
+ * Yêu cầu: Viết CSS Selector để lấy tất cả các nút "Save" trừ những nút có class disabled.
+ */
+
+// button.btn:not(.disabled)
+
+/**
+ * Bài 5: Tìm kiếm theo nhiều điều kiện (Logic AND)
+ * Ngữ cảnh: Một trang web có nhiều icon trùng lặp.
+ * HTML
+<i class="icon" data-type="delete" title="Remove item"></i>
+<i class="icon" data-type="edit" title="Edit item"></i>
+ * Yêu cầu: Viết 1 XPath kết hợp cả 2 thuộc tính data-type và title để định vị chính xác icon "Delete".
+ */
+
+//i[@data-type='delete' and @title='Remove item']
+
+/**
+ * Bài 6: Đào sâu vào Text một phần (Contains Text)
+ * Ngữ cảnh: Một thông báo lỗi có nội dung thay đổi theo thời gian.
+ * "Error: Hệ thống sẽ bảo trì vào lúc 22:00 PM. Vui lòng quay lại sau."
+ * Yêu cầu: Viết XPath tìm element chứa thông báo này chỉ bằng từ khóa "bảo trì".
+ */
+
+//*[contains(text(),'bảo trì')]
+
+/**
+ * Bài 7: Định vị phần tử con cụ thể (nth-child)
+ * Ngữ cảnh: Một menu danh mục sản phẩm.
+ * HTML
+<ul class="menu">
+    <li>Điện thoại</li>
+    <li>Laptop</li>
+    <li>Phụ kiện</li>
+</ul>
+ * Yêu cầu: Viết CSS Selector để chọn chính xác mục "Laptop" dựa vào thứ tự của nó trong danh sách.
+ */
+
+// .menu li:nth-child(2)
+
+/**
+ * Bài 8: Đi ngược dòng (XPath Axes - Ancestor)
+ * Ngữ cảnh: Bạn tìm thấy một icon lỗi, nhưng bạn cần click vào cái Container (thẻ div bao ngoài cùng) 
+ * của nó để mở rộng vùng chọn.
+ * HTML
+<div class="card-container">
+    <div class="card-header">
+        <span class="error-icon">!</span>
+    </div>
+</div>
+ * Yêu cầu: Viết XPath từ thẻ span.error-icon đi ngược lên để tìm thẻ div có class card-container.
+ */
+
+//span[@class='error-icon']/ancestor::div[@class='card-container']
+
+/**
+ * Bài 9: Xử lý khoảng trắng trong Class (XPath Normalize-space)
+ * Ngữ cảnh: Developer viết code cẩu thả khiến class có nhiều khoảng trắng thừa.
+ * <button class=" btn btn-login ">Login</button>
+ * Yêu cầu: Viết XPath tìm nút này bằng class btn-login mà không bị ảnh hưởng
+ * bởi các khoảng trắng dư thừa ở đầu và cuối.
+ */
+
+//button[contains(concat(' ', normalize-space(@class), ' '), ' btn-login ')]
